@@ -18,9 +18,13 @@ class ValueHiddenInput(forms.HiddenInput):
             return super(ValueHiddenInput, self).render(name, value, attrs)
 
 class LibertyReservePaymentsForm(forms.Form):
+    """
+    Form to generate 'Pay with Liberty Reserve' button.
+    When using, be sure to disable the CSRF token in the generated form.
+    """
     lr_acc = forms.CharField(widget=ValueHiddenInput())
-    lr_store = forms.IntegerField(widget=ValueHiddenInput())
-    lr_amnt = forms.IntegerField(widget=ValueHiddenInput())
+    lr_store = forms.CharField(widget=ValueHiddenInput())
+    lr_amnt = forms.CharField(widget=ValueHiddenInput())
     lr_currency = forms.CharField(widget=ValueHiddenInput())
     lr_comments = forms.CharField(widget=ValueHiddenInput())
     lr_merchant_ref = forms.CharField(widget=ValueHiddenInput())
@@ -35,7 +39,7 @@ class LibertyReservePaymentsForm(forms.Form):
         return mark_safe(u"""<form action="%s" method="post">
     %s
     <input type="submit" value="Pay with Liberty Reserve" />
-</form""" % POSTBACK_ENDPOINT, self.as_p())
+</form>""" % (POSTBACK_ENDPOINT, self.as_p()))
 
 class LibertyReserveIPNForm(forms.ModelForm):
     class Meta:
