@@ -1,0 +1,14 @@
+django-libertyreserve
+=====================
+
+A pluggable Django application for integrating with Liberty Reserve.
+This application is based on django-paypal by johnboxall and distributed under the same (MIT) license.
+
+Installation
+------------
+
+You need Django 1.1.
+
+1. Run `setup.py install`
+2. Put `libertyreserve` in `INSTALLED_APPS`
+3. Run `manage.py syncdb`
