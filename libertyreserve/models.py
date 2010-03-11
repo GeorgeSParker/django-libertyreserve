@@ -41,6 +41,8 @@ class LibertyReserveIPN(models.Model):
             self.set_flag("Duplicate lr_transfer. (%s)" % self.lr_transfer)
         elif self.lr_paidto != settings.LIBERTYRESERVE_ACCOUNT:
             self.set_flag("Invalid lr_paidto. (%s)" % self.lr_paidto)
+        elif self.lr_store != settings.LIBERTYRESERVE_STORE:
+            self.set_flag("Invalid lr_store. (%s)" % self.lr_store)
         elif not check_secret(form, self.lr_encrypted2):
             self.set_flag("Invalid lr_encrypted2. (%s)" % self.lr_encrypted2)
         elif callable(item_check_callable):

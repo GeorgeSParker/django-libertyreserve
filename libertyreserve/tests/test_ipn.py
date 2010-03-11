@@ -26,14 +26,17 @@ class IPNTest(TestCase):
         self.old_debug = settings.DEBUG
         self.old_libertyreserve_account = settings.LIBERTYRESERVE_ACCOUNT
         self.old_libertyreserve_secret = settings.LIBERTYRESERVE_SECRET
+        self.old_libertyreserve_store = settings.LIBERTYRESERVE_STORE
         settings.DEBUG = True
         settings.LIBERTYRESERVE_ACCOUNT = 'X1234567'
         settings.LIBERTYRESERVE_SECRET = 'secretsecretsecret'
+        settings.LIBERTYRESERVE_STORE = 'MyStore'
         
     def tearDown(self):
         settings.DEBUG = self.old_debug
         settings.LIBERTYRESERVE_ACCOUNT = self.old_libertyreserve_account
         settings.LIBERTYRESERVE_SECRET = self.old_libertyreserve_secret
+        settings.LIBERTYRESERVE_STORE = self.old_libertyreserve_store
  
     def assertGotSignal(self, signal, flagged, url='/ipn/'):
         # Check the signal was sent. These get lost if they don't reference self.
@@ -76,6 +79,11 @@ class IPNTest(TestCase):
     def test_incorrect_account(self):
         update = {"lr_paidto": "X7654321"}
         flag_info = "Invalid lr_paidto. (X7654321)"
+        self.assertFlagged(update, flag_info, url='/ipn_verify_custom/')
+
+    def test_incorrect_store(self):
+        update = {"lr_store": "BadStore"}
+        flag_info = "Invalid lr_store. (BadStore)"
         self.assertFlagged(update, flag_info, url='/ipn_verify_custom/')
 
     def test_incorrect_secret(self):
