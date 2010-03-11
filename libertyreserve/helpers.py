@@ -31,8 +31,10 @@ def make_secret(form_instance, secret_fields=None):
     concat_fields.append(settings.LIBERTYRESERVE_SECRET)
 
     concat_data = ':'.join(concat_fields)
-    secret = hashlib.sha256(concat_data).hexdigest()
-    return secret.upper()
+    secret = hashlib.sha256(concat_data).hexdigest().upper()
+    ### Uncomment if you need to know the expected secret.
+    # print secret
+    return secret
 
 def check_secret(form_instance, secret):
     """
